@@ -28,7 +28,7 @@ public class ComunicacaoController {
     //@ApiResponse(responseCode = "401", description = "Credenciais invalidas ")
     //@ApiResponse(responseCode = "409", description = "Usuário ja cadastrado")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
-    public ResponseEntity<ComunicacaoOutDTO> agendar(@RequestBody ComunicacaoInDTO dto)  {
+    public ResponseEntity<ComunicacaoOutDTO> agendar(@RequestBody ComunicacaoInDTO dto) {
         return ResponseEntity.ok(service.agendarComunicacao(dto));
     }
 
@@ -36,7 +36,7 @@ public class ComunicacaoController {
     @Operation(summary = "Bucar Comunicação por Email",
             description = "Buscar dados da comunicação")
     @ApiResponse(responseCode = "200", description = "Comunicação encontrada ")
-   // @ApiResponse(responseCode = "401", description = "Credenciais invalidas ")
+    // @ApiResponse(responseCode = "401", description = "Credenciais invalidas ")
     @ApiResponse(responseCode = "403", description = "Comunicação não encontrada verifique email esta correto")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     public ResponseEntity<ComunicacaoOutDTO> buscarStatus(@RequestParam String emailDestinatario) {

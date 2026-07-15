@@ -1,7 +1,6 @@
 package com.jwss.studio.comunicacao_api.business;
 
 
-
 import com.jwss.studio.comunicacao_api.api.dto.ComunicacaoOutDTO;
 import com.jwss.studio.comunicacao_api.infraestructure.client.NotificacaoClient;
 import lombok.RequiredArgsConstructor;

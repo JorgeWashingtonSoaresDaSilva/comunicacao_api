@@ -3,13 +3,15 @@ package com.jwss.studio.comunicacao_api.business.service;
 import com.jwss.studio.comunicacao_api.api.dto.ComunicacaoInDTO;
 import com.jwss.studio.comunicacao_api.api.dto.ComunicacaoOutDTO;
 import com.jwss.studio.comunicacao_api.business.NotificacaoService;
-import com.jwss.studio.comunicacao_api.business.converter.ComunicacaoConverter;
+import com.jwss.studio.comunicacao_api.business.mapper.ComunicacaoConverter;
 import com.jwss.studio.comunicacao_api.infraestructure.entities.ComunicacaoEntity;
 import com.jwss.studio.comunicacao_api.infraestructure.enums.StatusEnvioEnum;
 import com.jwss.studio.comunicacao_api.infraestructure.repositories.ComunicacaoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
@@ -31,6 +33,8 @@ public class ComunicacaoService {
             throw new RuntimeException();
         }
         dto.setStatusEnvio(StatusEnvioEnum.PENDENTE);
+        //dto.setDataHoraenvio(Date.valueOf(LocalDate.now()));
+
 
         ComunicacaoEntity entity = converter.paraEntity(dto);
         repository.save(entity);
