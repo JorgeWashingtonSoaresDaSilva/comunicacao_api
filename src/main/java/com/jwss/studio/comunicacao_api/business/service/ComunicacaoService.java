@@ -1,17 +1,18 @@
 package com.jwss.studio.comunicacao_api.business.service;
 
+import com.jwss.studio.comunicacao_api.api.GlobalExceptionHandler;
 import com.jwss.studio.comunicacao_api.api.dto.ComunicacaoInDTO;
 import com.jwss.studio.comunicacao_api.api.dto.ComunicacaoOutDTO;
 import com.jwss.studio.comunicacao_api.business.NotificacaoService;
 import com.jwss.studio.comunicacao_api.business.mapper.ComunicacaoConverter;
 import com.jwss.studio.comunicacao_api.infraestructure.entities.ComunicacaoEntity;
 import com.jwss.studio.comunicacao_api.infraestructure.enums.StatusEnvioEnum;
+
+
 import com.jwss.studio.comunicacao_api.infraestructure.repositories.ComunicacaoRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.util.Objects;
 
 @Service
@@ -19,18 +20,20 @@ public class ComunicacaoService {
 
     private final ComunicacaoRepository repository;
     private final ComunicacaoConverter converter;
+    private final GlobalExceptionHandler globalExceptionHandler;
 
     private final NotificacaoService notificacaoService;
 
-    public ComunicacaoService(ComunicacaoRepository repository, ComunicacaoConverter converter, NotificacaoService notificacaoService) {
+    public ComunicacaoService(ComunicacaoRepository repository, ComunicacaoConverter converter, GlobalExceptionHandler globalExceptionHandler, NotificacaoService notificacaoService) {
         this.repository = repository;
         this.converter = converter;
+        this.globalExceptionHandler = globalExceptionHandler;
         this.notificacaoService = notificacaoService;
     }
 
     public ComunicacaoOutDTO agendarComunicacao(ComunicacaoInDTO dto) {
-        if (Objects.isNull(dto)) {
-            throw new RuntimeException();
+       if (Objects.isNull(dto)) {
+           throw new RuntimeException();
         }
         dto.setStatusEnvio(StatusEnvioEnum.PENDENTE);
         //dto.setDataHoraenvio(Date.valueOf(LocalDate.now()));
@@ -48,7 +51,12 @@ public class ComunicacaoService {
         if (Objects.isNull(entity)) {
             throw new RuntimeException();
         }
+
         return converter.paraDTO(entity);
+
+
+
+
     }
 
     public ComunicacaoOutDTO alterarStatusComunicacao(String emailDestinatario) {
