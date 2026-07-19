@@ -1,44 +1,35 @@
 package com.jwss.studio.comunicacao_api.business.service;
 
-import com.jwss.studio.comunicacao_api.api.GlobalExceptionHandler;
+
 import com.jwss.studio.comunicacao_api.api.dto.ComunicacaoInDTO;
 import com.jwss.studio.comunicacao_api.api.dto.ComunicacaoOutDTO;
 import com.jwss.studio.comunicacao_api.business.NotificacaoService;
+
+
 import com.jwss.studio.comunicacao_api.business.mapper.ComunicacaoConverter;
 import com.jwss.studio.comunicacao_api.infraestructure.entities.ComunicacaoEntity;
 import com.jwss.studio.comunicacao_api.infraestructure.enums.StatusEnvioEnum;
-
-
 import com.jwss.studio.comunicacao_api.infraestructure.repositories.ComunicacaoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import java.util.Objects;
 
+@RequiredArgsConstructor
 @Service
 public class ComunicacaoService {
 
     private final ComunicacaoRepository repository;
     private final ComunicacaoConverter converter;
-    private final GlobalExceptionHandler globalExceptionHandler;
-
     private final NotificacaoService notificacaoService;
 
-    public ComunicacaoService(ComunicacaoRepository repository, ComunicacaoConverter converter, GlobalExceptionHandler globalExceptionHandler, NotificacaoService notificacaoService) {
-        this.repository = repository;
-        this.converter = converter;
-        this.globalExceptionHandler = globalExceptionHandler;
-        this.notificacaoService = notificacaoService;
-    }
 
     public ComunicacaoOutDTO agendarComunicacao(ComunicacaoInDTO dto) {
-       if (Objects.isNull(dto)) {
-           throw new RuntimeException();
+        if (Objects.isNull(dto)) {
+            throw new RuntimeException();
         }
         dto.setStatusEnvio(StatusEnvioEnum.PENDENTE);
-        //dto.setDataHoraenvio(Date.valueOf(LocalDate.now()));
-
-
         ComunicacaoEntity entity = converter.paraEntity(dto);
         repository.save(entity);
         ComunicacaoOutDTO outDTO = converter.paraDTO(entity);
@@ -55,8 +46,6 @@ public class ComunicacaoService {
         return converter.paraDTO(entity);
 
 
-
-
     }
 
     public ComunicacaoOutDTO alterarStatusComunicacao(String emailDestinatario) {
@@ -66,6 +55,7 @@ public class ComunicacaoService {
         }
         entity.setStatusEnvio(StatusEnvioEnum.CANCELADO);
         repository.save(entity);
+
         return (converter.paraDTO(entity));
     }
 

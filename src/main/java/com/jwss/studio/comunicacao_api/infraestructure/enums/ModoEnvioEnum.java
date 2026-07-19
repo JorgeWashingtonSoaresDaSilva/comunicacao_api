@@ -9,5 +9,5 @@ public enum ModoEnvioEnum {
     EMAIL,
     SMS,
     PUSH,
-    WHATSAPP;
+    WHATSAPP
 }

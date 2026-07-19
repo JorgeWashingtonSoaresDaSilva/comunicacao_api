@@ -6,7 +6,6 @@ import com.jwss.studio.comunicacao_api.infraestructure.enums.StatusEnvioEnum;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
