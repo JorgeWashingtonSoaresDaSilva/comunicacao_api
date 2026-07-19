@@ -9,6 +9,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 public class ComunicacaoApiApplication {
 
     public static void main(String[] args) {
+
+
         SpringApplication.run(ComunicacaoApiApplication.class, args);
     }
 

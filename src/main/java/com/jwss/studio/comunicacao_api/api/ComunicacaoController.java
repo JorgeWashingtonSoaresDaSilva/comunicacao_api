@@ -18,6 +18,7 @@ public class ComunicacaoController {
 
     private final ComunicacaoService service;
 
+
     public ComunicacaoController(ComunicacaoService service) {
         this.service = service;
     }
@@ -25,8 +26,9 @@ public class ComunicacaoController {
     @PostMapping("/agendar")
     @Operation(summary = "Agenda Comunicação", description = "Cria um nova comunicação")
     @ApiResponse(responseCode = "200", description = "Agendado com sucesso")
+    @ApiResponse(responseCode = "400", description = "Comunicação não encontrada verifique email esta correto")
     //@ApiResponse(responseCode = "401", description = "Credenciais invalidas ")
-    //@ApiResponse(responseCode = "409", description = "Usuário ja cadastrado")
+    @ApiResponse(responseCode = "409", description = "Conflito")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     public ResponseEntity<ComunicacaoOutDTO> agendar(@RequestBody ComunicacaoInDTO dto) {
         return ResponseEntity.ok(service.agendarComunicacao(dto));
@@ -37,9 +39,11 @@ public class ComunicacaoController {
             description = "Buscar dados da comunicação")
     @ApiResponse(responseCode = "200", description = "Comunicação encontrada ")
     // @ApiResponse(responseCode = "401", description = "Credenciais invalidas ")
-    @ApiResponse(responseCode = "403", description = "Comunicação não encontrada verifique email esta correto")
+    @ApiResponse(responseCode = "400", description = "Comunicação não encontrada verifique email esta correto")
+    @ApiResponse(responseCode = "403", description = "Email não encontrado verifique email esta correto")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     public ResponseEntity<ComunicacaoOutDTO> buscarStatus(@RequestParam String emailDestinatario) {
+
         return ResponseEntity.ok(service.buscarStatusComunicacao(emailDestinatario));
     }
 
