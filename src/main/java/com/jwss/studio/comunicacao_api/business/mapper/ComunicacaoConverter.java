@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 
 public interface ComunicacaoConverter {
 
-    @Mapping(source ="dataHoraenvio", target ="dataHoraenvio",dateFormat = "dd-MM-yyyy HH:mm:ss")
+    @Mapping(source = "dataHoraenvio", target = "dataHoraenvio", dateFormat = "dd-MM-yyyy HH:mm:ss")
     ComunicacaoEntity paraEntity(ComunicacaoInDTO dto);
 
     ComunicacaoOutDTO paraDTO(ComunicacaoEntity entity);

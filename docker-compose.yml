@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+
+  comunicacao_api:
+    build: .
+    container_name: comunicacao_api
+    ports:
+      - "8080:8080"
+    environment:
+      # ⚠️ Corrigido de localhost para mysql
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/comunicacao1?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=admin
+    depends_on:
+      - mysql
+    networks:
+      - rede-projeto
+
+  notificacao:
+    build: ../notificacao
+    container_name: notificacao
+    ports:
+      - "8082:8082"
+    networks:
+      - rede-projeto
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+      # ⚠️ Corrigido de POSTGRES para MYSQL
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=comunicacao1
+    ports:
+      - "3306:3306" # ⚠️ Corrigido para a porta padrão do MySQL
+    networks:
+      - rede-projeto
+
+networks:
+  rede-projeto:
+    driver: bridge

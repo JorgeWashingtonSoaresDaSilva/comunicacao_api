@@ -23,21 +23,6 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,19 +35,10 @@
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
-
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -78,6 +54,7 @@
             <version>13.13</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -96,16 +73,16 @@
             <version>0.2.0</version>
             <scope>compile</scope>
         </dependency>
+
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -137,6 +114,56 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <!-- 1º LOMBOK (Sempre primeiro) -->
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                    <version>${lombok.version}</version>
+                                </path>
+                                <!-- 2º O VÍNCULO ENTRE ELES -->
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok-mapstruct-binding</artifactId>
+                                    <version>0.2.0</version>
+                                </path>
+                                <path>
+                                    <groupId>org.mapstruct</groupId>
+                                    <artifactId>mapstruct-processor</artifactId>
+                                    <version>1.5.3.Final</version> <!-- Use a versão do seu projeto -->
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <path>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
